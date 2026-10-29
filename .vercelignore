@@ -1,12 +1,21 @@
-react-app
-pipeline
+# Entries here are deleted from the clone before the build runs, so nothing
+# under react-app/ may be listed -- that is the Root Directory Vercel builds.
+#
+# Patterns match at every depth, so the root-only exclusions are anchored with
+# a leading slash. An unanchored *.xlsx would also strip the demo data in
+# react-app/public-vercel/ and deploy an app with nothing in it.
+
+/pipeline
 node_modules
-*.xlsx
-*.docx
-*.pptx
-*.md
-replenishment-cockpit-prototype.html
-replenishment-cockpit-v2.html
-replenishment-cockpit-v3.html
-replenishment-cockpit-v4.html
-replenishment-ai-platform.html
+/data
+/*.xlsx
+/*.docx
+/*.pptx
+/*.md
+/*.csv
+/replenishment-cockpit-prototype.html
+/replenishment-cockpit-v2.html
+/replenishment-cockpit-v3.html
+/replenishment-cockpit-v4.html
+/replenishment-cockpit-v5.html
+/replenishment-ai-platform.html
