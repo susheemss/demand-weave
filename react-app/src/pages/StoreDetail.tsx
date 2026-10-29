@@ -38,7 +38,7 @@ export default function StoreDetail() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-1.5 text-[11.5px] text-ink4">
-        <button onClick={() => navigate('/overview')} className="hover:text-blue font-medium">Demand Overview</button>
+        <button onClick={() => navigate('/cockpit')} className="hover:text-cyan-dark font-medium">Enterprise Cockpit</button>
         <ChevronRight size={12} />
         <span className="text-ink2 font-semibold">{store.name} · SKU replenishment detail</span>
       </div>

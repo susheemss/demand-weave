@@ -2,13 +2,14 @@ import Panel, { LegendDot } from '../components/ui/Panel'
 import PendingNote from '../components/ui/PendingNote'
 import DemandForecastChart from '../components/charts/DemandForecastChart'
 import DemandSensingChart from '../components/charts/DemandSensingChart'
-import OnHandDRPChart from '../components/charts/OnHandDRPChart'
-import InventoryGapChart from '../components/charts/InventoryGapChart'
+import KpiBand from '../components/kpi/KpiBand'
+import AiSummaryPanel from '../components/ai/AiSummaryPanel'
+import InsightsPanel from '../components/ai/InsightsPanel'
 import { useAppStore } from '../store/useAppStore'
 import { useStoreView, useDemandView } from '../hooks/useStoreView'
 import { useDrillDownStore } from '../store/useDrillDownStore'
 
-export default function Overview() {
+export default function DemandPlanning() {
   const currentStore = useAppStore((s) => s.currentStore)
   const currentSkuFilter = useAppStore((s) => s.currentSkuFilter)
   const currentCustomerFilter = useAppStore((s) => s.currentCustomerFilter)
@@ -36,44 +37,37 @@ export default function Overview() {
   const forecast = demand.forecast.slice(0, n)
   const sensed = demand.sensed.slice(0, n)
 
-  // Chart 3/4 respect the SKU filter -- otherwise "replenishment" could
-  // reflect a completely different SKU's reorder landing in the same month.
   const selectedSku = currentSkuFilter === 'all' ? null : store.skus.find((s) => s.id === currentSkuFilter) ?? null
-  const onHandSeries = (selectedSku ? selectedSku.onHandSeries : store.onHandSeries).slice(0, n)
-  const replenQtySeries = (selectedSku ? selectedSku.replenQtySeries : store.replenQtySeries).slice(0, n)
-  const ropSeries = (selectedSku ? selectedSku.ropSeries : store.ropSeries).slice(0, n)
-  const gapSeries = (selectedSku ? selectedSku.gapSeries : store.gap).slice(0, n)
 
-  // Chart 2 is a separate live source (Total Demand / Sensed Forecast) from
-  // chart1's Baseline/Promo demand file -- also SKU-filter-aware, same
-  // reasoning as chart3/4.
+  // Demand sensing is a separate live source (Total Demand / Sensed Forecast)
+  // from the Baseline/Promo demand file behind the forecast chart.
   const sensingForecast = (selectedSku ? selectedSku.sensingForecast : store.sensingForecast).slice(0, n)
   const sensingSensed = (selectedSku ? selectedSku.sensingSensed : store.sensingSensed).slice(0, n)
 
-  const drillDownCtx = {
-    store,
-    selectedSku,
-    labels,
-    demandForecast: forecast,
-    demandSensed: sensed,
-    onHandSeries,
-    replenQtySeries,
-    ropSeries,
-  }
-  const handleDemandBarClick = (i: number) => openDrillDown('demand', i, drillDownCtx)
-  const handleInventoryBarClick = (i: number) => openDrillDown('inventory', i, drillDownCtx)
+  const handleDemandBarClick = (i: number) =>
+    openDrillDown('demand', i, {
+      store,
+      selectedSku,
+      labels,
+      demandForecast: forecast,
+      demandSensed: sensed,
+      onHandSeries: (selectedSku ? selectedSku.onHandSeries : store.onHandSeries).slice(0, n),
+      replenQtySeries: (selectedSku ? selectedSku.replenQtySeries : store.replenQtySeries).slice(0, n),
+      ropSeries: (selectedSku ? selectedSku.ropSeries : store.ropSeries).slice(0, n),
+    })
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="space-y-5">
+      <KpiBand page="demand" label="Demand KPIs" cols={4} scoped />
+
       {demand.customerScopeMismatch && (
         <PendingNote>
           <b className="text-ink3">Showing all customers.</b> The demand file has no rows for{' '}
-          <b>{currentCustomerFilter}</b> — demand charts are store-wide here, while the inventory panels below stay
-          filtered to that customer.
+          <b>{currentCustomerFilter}</b> — these charts are store-wide.
         </PendingNote>
       )}
 
-      <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
+      <div className="grid grid-cols-2 gap-3 h-[330px]">
         <Panel
           title="Demand forecast"
           subtitle="Units / month · baseline vs AI sensed uplift · click any bar to drill down"
@@ -88,23 +82,11 @@ export default function Overview() {
         >
           <DemandSensingChart labels={labels} sensed={sensingSensed} totalDemand={sensingForecast} />
         </Panel>
-
-        <Panel
-          title="On-hand inventory"
-          subtitle="From your inventory file · click any bar to drill down"
-          legend={<><LegendDot color="#94A3B8" label="On-hand" /><LegendDot color="#16A34A" label="Replen qty" /></>}
-        >
-          <OnHandDRPChart labels={labels} onHandSeries={onHandSeries} replenQtySeries={replenQtySeries} ropSeries={ropSeries} onBarClick={handleInventoryBarClick} />
-        </Panel>
-
-        <Panel
-          title="Inventory gap / net requirement"
-          subtitle="On-hand minus ROP, from your inventory file"
-          legend={<><LegendDot color="#16A34A" label="Surplus" /><LegendDot color="#DC2626" label="Shortfall" /></>}
-        >
-          <InventoryGapChart labels={labels} gap={gapSeries} />
-        </Panel>
       </div>
+
+      <InsightsPanel />
+
+      <AiSummaryPanel page="demand" title="AI demand summary" />
     </div>
   )
 }

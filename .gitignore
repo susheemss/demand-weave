@@ -12,3 +12,12 @@ ifs_di2_demand_sensing_modified.csv
 monthly_inventory_replenishment_output_modified.csv
 Test_No_SafetyStock.xlsx
 react-app/dist
+
+# Raw IFS exports -- real client data, deliberately kept out of this repo.
+# The app reads them from wherever source_path*.txt points, so they never
+# need to be committed. The trimmed, shareable slice used by the Vercel
+# build lives in react-app/public-vercel/ and IS tracked.
+IFS_*.csv
+IFS_*.xlsx
+KPI.xlsx
+Dummy_AI_Summary.csv

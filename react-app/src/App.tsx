@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Sidebar from './components/layout/Sidebar'
 import Topbar from './components/layout/Topbar'
-import Overview from './pages/Overview'
-import Kpi from './pages/Kpi'
+import Cockpit from './pages/Cockpit'
+import DemandPlanning from './pages/DemandPlanning'
+import InventoryManagement from './pages/InventoryManagement'
+import DecisionIntelligence from './pages/DecisionIntelligence'
 import StoreDetail from './pages/StoreDetail'
-import Dispatch from './pages/Dispatch'
 import Agents from './pages/Agents'
 import ChatAssistant from './components/ai/ChatAssistant'
 import DrillDownPanel from './components/drilldown/DrillDownPanel'
@@ -44,13 +45,14 @@ export default function App() {
           <Topbar />
           <main className="flex-1 overflow-y-auto p-5 bg-bg">
             <Routes>
-              <Route path="/" element={<Navigate to="/overview" replace />} />
-              <Route path="/overview" element={<Overview />} />
-              <Route path="/kpi" element={<Kpi />} />
+              <Route path="/" element={<Navigate to="/cockpit" replace />} />
+              <Route path="/cockpit" element={<Cockpit />} />
+              <Route path="/demand" element={<DemandPlanning />} />
+              <Route path="/inventory" element={<InventoryManagement />} />
+              <Route path="/insights" element={<DecisionIntelligence />} />
               <Route path="/stores/:storeId" element={<StoreDetail />} />
-              <Route path="/replenishment" element={<Dispatch />} />
               <Route path="/agents" element={<Agents />} />
-              <Route path="*" element={<Navigate to="/overview" replace />} />
+              <Route path="*" element={<Navigate to="/cockpit" replace />} />
             </Routes>
           </main>
           <StatusBar />

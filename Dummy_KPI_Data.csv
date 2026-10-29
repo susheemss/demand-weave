@@ -1,0 +1,17 @@
+page,rank,label,value,delta,delta_dir,highlight
+cockpit,1,Plan health,92%,↑ 2.0 pts vs last cycle,up,false
+cockpit,2,Forecast accuracy,78.4%,↓ 1.1 pts w/w,down,false
+cockpit,3,Feasible demand,96.1%,↑ 0.8 pts vs last cycle,up,false
+cockpit,4,Revenue vs target,-1.2%,↓ 1.2% vs plan,down,false
+cockpit,5,Margin vs target,-0.7%,↓ 0.7% vs plan,down,false
+cockpit,6,Value at risk,GBP 3.4m,↑ 0.4m w/w,down,true
+cockpit,7,Critical exceptions,7,3 critical / 4 high,neu,false
+cockpit,8,Decisions due,3,Pre-S&OP in 18 hrs,neu,false
+demand,1,Forecast accuracy,78.4%,↓ 1.1 pts w/w,down,false
+demand,2,Baseline demand,1.42K units,↑ 3.4% vs prior month,up,false
+demand,3,Sensed uplift,+6.4%,Promo + festival active,neu,false
+demand,4,Plan coverage,13 months,Nov 2025 - Nov 2026,neu,false
+inventory,1,Total on-hand,14.2K units,↑ 2.1% vs prior month,up,false
+inventory,2,SKUs below ROP,18,of 60 positions,neu,false
+inventory,3,Net requirement,2.38K units,↑ 340 units w/w,down,true
+inventory,4,Redeploy opportunity,6 SKUs,4.1 weeks excess cover,neu,false

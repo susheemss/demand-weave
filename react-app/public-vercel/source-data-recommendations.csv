@@ -1,0 +1,13 @@
+location,id,rank,priority,recommendation_type,headline,subtext,source
+816,LOC-816-REC-001,1,CRITICAL,CURRENT_CYCLE_REPLENISHMENT,Place Order for SKU 179191: Sold to Customer 10872,"Current cycle recommended quantity is 276.0 units, due on earliest reorder date of 2025-11-01.",lm_studio
+816,LOC-816-REC-002,2,CRITICAL,ZERO_BALANCE_RISK,Place Order for SKU 179274: Sold to Customer 10872,"Zero balance projected in 1 period(s) from start, recommended quantity is 15.0 units, due on earliest reorder date of 2025-11-01.",lm_studio
+816,LOC-816-REC-003,3,CRITICAL,HORIZON_REPLENISHMENT_OUTLOOK,Full Horizon Replenishment Outlook for Location 816,"Total recommended quantity over horizon is 10394.0 units, projected balance at or below zero in 12 periods.",lm_studio
+816,LOC-816-REC-004,4,HIGH,CURRENT_CYCLE_REPLENISHMENT,Place Order for SKU 179256: Sold to Customer 10872,"Current cycle recommended quantity is 48.0 units, due on earliest reorder date of 2025-11-01.",lm_studio
+816,LOC-816-REC-005,5,MEDIUM,CURRENT_CYCLE_REPLENISHMENT,Place Order for SKU 179128: Sold to Customer 10857,"Current cycle recommended quantity is 6.0 units, due on earliest reorder date of 2026-01-01.",lm_studio
+817,LOC-817-REC-001,1,CRITICAL,CURRENT_CYCLE_REPLENISHMENT,Place Order for SKU 76628 Now,Current cycle recommended quantity: 157.0 units,lm_studio
+817,LOC-817-REC-002,2,CRITICAL,ZERO_BALANCE_RISK,Monitor Inventory Level for SKU 76628,Projected balance below zero by 2025-12-01,lm_studio
+817,LOC-817-REC-003,3,CRITICAL,HORIZON_REPLENISHMENT_OUTLOOK,Replenish Over Full Horizon for SKU 76628,Total projected replenishment over horizon: 1884.0 units,lm_studio
+817,LOC-817-REC-004,4,CRITICAL,CURRENT_CYCLE_REPLENISHMENT,Place Order for SKU 76627 Now,Current cycle recommended quantity: 125.0 units,lm_studio
+817,LOC-817-REC-005,5,CRITICAL,ZERO_BALANCE_RISK,Monitor Inventory Level for SKU 76627,Projected balance below zero by 2025-12-01,lm_studio
+817,LOC-817-REC-006,6,CRITICAL,HORIZON_REPLENISHMENT_OUTLOOK,Replenish Over Full Horizon for SKU 76627,Total projected replenishment over horizon: 1500.0 units,lm_studio
+817,LOC-817-REC-007,7,CRITICAL,CURRENT_CYCLE_REPLENISHMENT,Place Order for SKU 74682 Now,Current cycle recommended quantity: 123.0 units,lm_studio

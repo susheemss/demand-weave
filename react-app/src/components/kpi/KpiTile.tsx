@@ -18,13 +18,18 @@ export default function KpiTile({
   label, value, delta, deltaClass = 'delta-neu', highlight, icon, sub, spark, sparkColor,
 }: KpiTileProps) {
   return (
-    <div className={`kpi-tile ${highlight ? 'kpi-tile-highlight' : ''}`}>
+    /* min-height keeps a tile whose value hasn't been produced yet the same
+       size as its neighbours, so a band of mostly-empty tiles still reads
+       as a grid rather than a ragged row. */
+    <div className={`kpi-tile min-h-[70px] ${highlight ? 'kpi-tile-highlight' : ''}`}>
       <div className="flex items-center justify-between gap-2">
         <span className={`kpi-label ${highlight ? 'text-blue-dark' : ''}`}>{label}</span>
         {icon && <span className={highlight ? 'text-blue' : 'text-ink5'}>{icon}</span>}
       </div>
       <div className="flex items-end justify-between gap-2">
-        <div className={`kpi-value ${highlight ? 'text-blue-dark' : ''}`}>{value}</div>
+        {/* No value at all when the source file hasn't produced one -- the
+            KPI name alone, never a zero or a placeholder glyph. */}
+        {value && <div className={`kpi-value ${highlight ? 'text-blue-dark' : ''}`}>{value}</div>}
         {spark && spark.length > 1 && (
           <div className="pb-1">
             <Sparkline data={spark} color={sparkColor ?? (highlight ? '#2E6BE6' : '#8B95A5')} />

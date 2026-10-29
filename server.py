@@ -8,6 +8,9 @@ folder at all.
   /source-data-inventory.xlsx       <- source_path_inventory.txt       (inventory, Excel)
   /source-data-sensing.xlsx         <- source_path_sensing.txt         (sensing, Excel)
   /source-data-recommendations.csv  <- source_path_recommendations.txt (AI recommendations, CSV)
+  /source-data-insights.csv         <- source_path_insights.txt         (AI forecast/sensing insights, CSV)
+  /source-data-kpi.csv              <- source_path_kpi.txt              (KPI tile values, CSV)
+  /source-data-summary.csv          <- source_path_summary.txt          (per-screen AI summaries, CSV)
 
 Each path is read from its config file on every request, so you can
 change where any of them points without restarting this server -- just
@@ -38,6 +41,9 @@ ROUTES = {
     '/source-data-inventory.xlsx':      APP_DIR / 'source_path_inventory.txt',
     '/source-data-sensing.xlsx':        APP_DIR / 'source_path_sensing.txt',
     '/source-data-recommendations.csv': APP_DIR / 'source_path_recommendations.txt',
+    '/source-data-insights.csv':        APP_DIR / 'source_path_insights.txt',
+    '/source-data-kpi.csv':             APP_DIR / 'source_path_kpi.txt',
+    '/source-data-summary.csv':         APP_DIR / 'source_path_summary.txt',
 }
 # Content-Type per route -- everything defaults to the Excel mimetype except
 # the recommendations route, which is a real CSV. Harmless either way since
@@ -45,6 +51,9 @@ ROUTES = {
 # worth being accurate.
 ROUTE_CONTENT_TYPE = {
     '/source-data-recommendations.csv': 'text/csv',
+    '/source-data-insights.csv': 'text/csv',
+    '/source-data-kpi.csv': 'text/csv',
+    '/source-data-summary.csv': 'text/csv',
 }
 DEFAULT_CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 

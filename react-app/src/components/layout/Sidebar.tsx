@@ -1,20 +1,20 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Store, Truck, Network, Gauge, Bot } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
 
-function NavItem({ to, icon: Icon, label, badge, aiDot, active }: {
-  to: string; icon: any; label: string; badge?: number; aiDot?: boolean; active?: boolean
+/* Text-only nav cards, matching the WEAVE layout -- no icons. The only
+   adornment is the shortfall badge on Stores, which is a real count derived
+   from the loaded inventory data (SKUs flagged Replenish or Low). */
+function NavItem({ to, label, badge, active }: {
+  to: string; label: string; badge?: number; active?: boolean
 }) {
   return (
     <NavLink to={to} className={({ isActive }) => `sidebar-link ${active ?? isActive ? 'active' : ''}`}>
-      <Icon size={15} strokeWidth={1.8} className="flex-shrink-0" />
       <span className="flex-1 truncate">{label}</span>
       {typeof badge === 'number' && badge > 0 && (
-        <span className="text-[10px] leading-none bg-red text-white rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center font-bold num">
+        <span className="text-[10px] leading-none bg-red text-white rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center font-bold num flex-shrink-0">
           {badge}
         </span>
       )}
-      {aiDot && <span className="w-1.5 h-1.5 rounded-full bg-purple flex-shrink-0" />}
     </NavLink>
   )
 }
@@ -31,45 +31,34 @@ export default function Sidebar() {
   }, 0)
 
   return (
-    <aside className="w-[218px] flex-shrink-0 flex flex-col h-full" style={{ background: '#1B2537' }}>
+    <aside className="w-[210px] flex-shrink-0 flex flex-col h-full bg-sidebar">
       {/* Brand */}
-      <div className="px-4 h-14 flex items-center gap-2.5 border-b border-white/[0.07]">
-        <div
-          className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg, #6C5CE7, #2E6BE6)' }}
-        >
-          <Network size={14} className="text-white" strokeWidth={2.2} />
+      <div className="px-4 pt-5 pb-6">
+        <div className="border border-dashed border-white/40 rounded px-3 py-2 inline-block">
+          <div className="text-[17px] font-extrabold text-white leading-none tracking-tight">WEAVE</div>
         </div>
-        <div className="min-w-0">
-          <div className="text-[13px] font-bold text-white leading-tight tracking-tight truncate">Decision Intelligence</div>
-          <div className="text-[10px] text-white/35 leading-tight">Demand &amp; Replenishment</div>
-        </div>
+        <div className="text-[10.5px] font-semibold text-cyan-bright mt-2">Enterprise Planning</div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
-        <div>
-          <div className="sidebar-section">Planning</div>
-          <div className="space-y-0.5">
-            <NavItem to="/overview" icon={LayoutDashboard} label="Demand Overview" />
-            <NavItem to="/kpi" icon={Gauge} label="Demand KPI" />
-            <NavItem
-              to={currentStore ? `/stores/${currentStore}` : '/overview'}
-              icon={Store}
-              label="Stores"
-              badge={shortfallCount}
-              active={location.pathname.startsWith('/stores/')}
-            />
-            <NavItem to="/replenishment" icon={Truck} label="Replenishment" aiDot />
-          </div>
-        </div>
-
-        <div>
-          <div className="sidebar-section">AI</div>
-          <div className="space-y-0.5">
-            <NavItem to="/agents" icon={Bot} label="AI Agent" aiDot />
-          </div>
-        </div>
+      <nav className="flex-1 overflow-y-auto px-3 space-y-2">
+        <NavItem to="/cockpit" label="Enterprise Cockpit" />
+        <NavItem to="/demand" label="Demand Planning" />
+        <NavItem to="/inventory" label="Inventory Management" />
+        <NavItem to="/insights" label="Decision Intelligence" />
+        <NavItem
+          to={currentStore ? `/stores/${currentStore}` : '/cockpit'}
+          label="Stores"
+          badge={shortfallCount}
+          active={location.pathname.startsWith('/stores/')}
+        />
+        <NavItem to="/agents" label="AI Agent" />
       </nav>
+
+      <div className="px-4 py-5 mt-2">
+        <div className="border-t border-white/15 pt-4 text-[10px] text-white/35 leading-relaxed">
+          {storeOrder.length} location{storeOrder.length === 1 ? '' : 's'} · 1 DC
+        </div>
+      </div>
     </aside>
   )
 }

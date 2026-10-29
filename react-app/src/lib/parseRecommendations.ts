@@ -43,6 +43,15 @@ export interface Recommendation {
   type: string
   headline: string
   subtext: string
+  /* The `location` this row was generated for, verbatim. Deliberately not in
+     RECOMMENDATION_REQUIRED_COLS: a file without the column still parses,
+     and its rows simply carry '' and are never filtered out.
+
+     These are the recommendation system's own location codes (816, 817),
+     which are not the region codes the demand file uses (CEU, AEU), so they
+     can't be matched against the top bar's Location filter -- the screen
+     offers its own selector built from these values instead. */
+  location: string
 }
 
 export function parseRecommendationsSheet(wb: XLSX.WorkBook, sheetName: string): Recommendation[] {
@@ -61,6 +70,7 @@ export function parseRecommendationsSheet(wb: XLSX.WorkBook, sheetName: string):
       type: String(r['recommendation_type'] ?? '').trim(),
       headline,
       subtext: String(r['subtext'] ?? '').trim(),
+      location: String(r['location'] ?? '').trim(),
     })
   })
   // Real rank order from the file, not assumed to already be sorted on disk.
